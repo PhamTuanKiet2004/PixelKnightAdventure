@@ -10,12 +10,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheck; // kiểu dữ liệu lưu trữ vị trí (x, y, z) của 1 vật thể => giải quyết vấn đề ở đâu
     private bool isGrounded;
     private Animator animator;
+    private GameManager gameManager;
 
     private Rigidbody2D rb;
     private void Awake() // lấy tham chiếu
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        gameManager = FindAnyObjectByType<GameManager>();
     }
     void Start()
     {
@@ -24,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (gameManager.IsGameOver()) return; // nếu game đã kết thúc thì không thực hiện các hành động tiếp theo
         HandleMovement();
         HandleJump();
         UpdateAnimation();
