@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Coin
+  - Trap
+  - Enermy
   layers:
   - Default
   - TransparentFX
@@ -53,6 +55,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1010037209
+    locked: 0
+  - name: Enermy
+    uniqueID: 3299763851
     locked: 0
   - name: item
     uniqueID: 3502713757
