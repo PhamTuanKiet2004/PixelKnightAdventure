@@ -10,12 +10,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheck; // kiểu dữ liệu lưu trữ vị trí (x, y, z) của 1 vật thể => giải quyết vấn đề ở đâu
     private bool isGrounded;
     private Animator animator;
+    private GameManager gameManager;
+    private AudioManager audioManager;
 
     private Rigidbody2D rb;
     private void Awake() // lấy tham chiếu
     {
         animator = GetComponent<Animator>();
+        audioManager = FindAnyObjectByType<AudioManager>();
         rb = GetComponent<Rigidbody2D>();
+        gameManager = FindAnyObjectByType<GameManager>();
     }
     void Start()
     {
@@ -24,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (gameManager.IsGameOver() || gameManager.IsGameWin()) return; // nếu game đã kết thúc thì không thực hiện các hành động tiếp theo
         HandleMovement();
         HandleJump();
         UpdateAnimation();
@@ -40,7 +45,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") && isGrounded) // đây là button space
         {
+
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            audioManager.playJumpSound();
         }
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer); 
     }
